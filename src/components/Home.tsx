@@ -62,7 +62,7 @@ export default function Home() {
           여성의류
         </Button>
       </section>
-      <Span>showing : n items</Span>
+      <Span>showing : {filteredItems.length} items</Span>
       <GridSection>
         {filteredItems.map((item: any) => {
           return (
