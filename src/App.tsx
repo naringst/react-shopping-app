@@ -3,8 +3,8 @@ import Home from "./components/Home";
 import Cart from "./components/Cart";
 import Login from "./components/Login";
 import Layout from "./components/Layout";
+import Mypage from "./components/Mypage";
 import "./App.css";
-
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />}></Route>
           <Route path="cart" element={<Cart />}></Route>
+          <Route path="mypage" element={<Mypage />}></Route>
           <Route path="login" element={<Login />}></Route>
         </Route>
       </Routes>
