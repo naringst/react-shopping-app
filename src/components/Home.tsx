@@ -1,30 +1,90 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { instance } from "../api/instance";
+
+interface Item {
+  id: String;
+  title: String;
+  image: String;
+  price: Number;
+  category: String;
+}
 
 export default function Home() {
+  const [itemLists, setItemLists] = useState<Item[]>([]);
+  const [filteredItems, setFilteredItems] = useState<Item[]>(itemLists);
+
+  useEffect(() => {
+    getData();
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    setFilteredItems(itemLists);
+  }, [itemLists]);
+
+  async function getData() {
+    try {
+      const response = await instance.get("/products");
+      setItemLists(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const filterItem = (e: React.MouseEvent<HTMLElement>) => {
+    if (e.currentTarget.id === "all") {
+      setFilteredItems(itemLists);
+    } else {
+      setFilteredItems(
+        itemLists.filter((item) => item.category === e.currentTarget.id)
+      );
+    }
+  };
+
   return (
-    <div>
+    <Container>
       <h1>Products</h1>
       <section>
-        <Button>모두</Button>
-        <Button>전자기기</Button>
-        <Button>쥬얼리</Button>
-        <Button>남성의류</Button>
-        <Button>여성의류</Button>
+        <Button id="all" onClick={filterItem}>
+          모두
+        </Button>
+        <Button id="electronics" onClick={filterItem}>
+          전자기기
+        </Button>
+        <Button id="jewelery" onClick={filterItem}>
+          쥬얼리
+        </Button>
+        <Button id="men's clothing" onClick={filterItem}>
+          남성의류
+        </Button>
+        <Button id="women's clothing" onClick={filterItem}>
+          여성의류
+        </Button>
       </section>
       <Span>showing : n items</Span>
       <GridSection>
-        <ItemDiv>div</ItemDiv>
-        <ItemDiv>ㅇ</ItemDiv>
-        <ItemDiv>ㅇ</ItemDiv>
-        <ItemDiv>ㅇ</ItemDiv>
-        <ItemDiv>ㅇ</ItemDiv>
-        <ItemDiv>ㅇ</ItemDiv>
-        <ItemDiv>ㅇ</ItemDiv>
+        {filteredItems.map((item: any) => {
+          return (
+            <ItemDiv key={item.id}>
+              <img src={item.image} width="30px" height="50px" />
+              <ItemName>{item.title}</ItemName>
+              <ItemName>{item.price}</ItemName>
+            </ItemDiv>
+          );
+        })}
       </GridSection>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  padding-bottom: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+`;
 
 const Button = styled.button`
   width: 140px;
@@ -49,12 +109,24 @@ const Span = styled.p`
 `;
 
 const GridSection = styled.section`
+  padding: 5px 50px;
   display: grid;
   grid-template-rows: 200px 200px 200px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   place-items: center;
+  grid-column-gap: 30px;
+  grid-row-gap: 40px;
 `;
 
 const ItemDiv = styled.div`
+  width: 100%;
+  height: 100%;
   border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const ItemName = styled.h2`
+  font-size: 14px;
 `;
