@@ -36,10 +36,6 @@ const Header = styled.header`
   box-shadow: 0 4px 2px -2px #d9d9d9;
 `;
 
-const Div = styled.div`
-  display: flex;
-`;
-
 const Span = styled.span`
   margin: 0px 5px;
 `;
