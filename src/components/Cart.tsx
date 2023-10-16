@@ -1,24 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 export default function Cart({ cartItem, setCartItem }: any) {
-  let totalPrice = 0;
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const deleteItem = (e: any) => {
+    //여기서 그냥 처리해버림
+    if (cartItem.length === 1) {
+      setTotalPrice(0);
+    }
+
     setCartItem(
       cartItem.filter((item: any) => {
-        return item.id !== e.target.id;
+        return item.id != e.target.id;
       })
     );
   };
 
-  function countTotal() {
+  const countTotal = () => {
+    let totalPrice = 0;
     cartItem.forEach((item: any) => {
-      console.log(item.price);
       totalPrice += Number(item.price);
-      console.log(totalPrice);
+      setTotalPrice(totalPrice);
     });
-  }
+  };
 
   useEffect(() => {
     countTotal();
@@ -31,14 +36,16 @@ export default function Cart({ cartItem, setCartItem }: any) {
           <img src={item?.image} width="80px" />
           <DescDiv>
             <div>{item?.title}</div>
-            <div>{item?.price}</div>
+            <div>${item?.price}</div>
           </DescDiv>
           <Counter>
             <button>-</button>
             <p>n개</p>
             <button>+</button>
           </Counter>
-          <button>삭제</button>
+          <button onClick={deleteItem} id={item.id}>
+            삭제
+          </button>
         </Div>
       ))}
       <div>
