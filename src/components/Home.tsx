@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { instance } from "../api/instance";
-
-interface Item {
-  id: String;
-  title: String;
-  image: String;
-  price: Number;
-  category: String;
-}
+import { Link } from "react-router-dom";
+import { Item } from "../interface/interface";
 
 export default function Home() {
   const [itemLists, setItemLists] = useState<Item[]>([]);
@@ -66,11 +60,19 @@ export default function Home() {
       <GridSection>
         {filteredItems.map((item: any) => {
           return (
-            <ItemDiv key={item.id}>
-              <img src={item.image} width="30px" height="50px" />
-              <ItemName>{item.title}</ItemName>
-              <ItemName>{item.price}</ItemName>
-            </ItemDiv>
+            <Link to={`detail/${item.id}`}>
+              <ItemDiv
+                key={item.id}
+                onClick={() => {
+                  console.log("상세페이지 이동");
+                  console.log(item.id);
+                }}
+              >
+                <img src={item.image} width="30px" height="50px" />
+                <ItemName>{item.title}</ItemName>
+                <ItemName>{item.price}</ItemName>
+              </ItemDiv>
+            </Link>
           );
         })}
       </GridSection>
