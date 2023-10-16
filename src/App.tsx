@@ -9,6 +9,7 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import { Item } from "./interface/interface";
+import SignUp from "./components/SignUp";
 
 function App() {
   const [cartItem, setCartItem] = useState<Item[]>([]);
@@ -31,6 +32,7 @@ function App() {
           ></Route>
           <Route path="mypage" element={<Mypage />}></Route>
           <Route path="login" element={<Login />}></Route>
+          <Route path="signup" element={<SignUp />}></Route>
         </Route>
       </Routes>
     </div>
