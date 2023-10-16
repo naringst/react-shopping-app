@@ -17,7 +17,10 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home />}></Route>
+          <Route
+            path="/"
+            element={<Home cartItem={cartItem} setCartItem={setCartItem} />}
+          ></Route>
           <Route
             path="/detail/:id"
             element={<Detail cartItem={cartItem} setCartItem={setCartItem} />}
