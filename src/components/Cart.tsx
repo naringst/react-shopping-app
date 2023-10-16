@@ -40,7 +40,7 @@ export default function Cart({ cartItem, setCartItem }: any) {
           </DescDiv>
           <Counter>
             <button>-</button>
-            <p>n개</p>
+            <p>${item?.count}개</p>
             <button>+</button>
           </Counter>
           <button onClick={deleteItem} id={item.id}>

@@ -42,8 +42,29 @@ export default function Home({ cartItem, setCartItem }: any) {
     const result = filteredItems.filter((item) => {
       return String(item.id) === String(e.target.id);
     });
+    console.log("result", result);
 
-    setCartItem([...result, ...cartItem]);
+    const newCart = cartItem.map((it: any) => {
+      it.id == result[0].id ? (it.count += 1) : (it.count = 1);
+      return it;
+    });
+
+    console.log("newcart", newCart);
+
+    setCartItem(newCart);
+    // if (cartItem.includes(result[0]["id"]) === false) {
+    //   result[0]["count"] = 1;
+    //   setCartItem([result[0], ...cartItem]);
+    //   console.log(cartItem);
+    // } else {
+    //   result[0]["count"] = Number(result[0]["count"]) + 1;
+    //   console.log("count++");
+    //   const updatedItem = cartItem.map((item: any) =>
+    //     Number(item.id) === Number(result[0].id) ? result[0] : item
+    //   );
+    //   console.log(updatedItem);
+    //   setCartItem(updatedItem);
+    // }
 
     alert(`${result[0].title}이 장바구니에 담겼습니다!`);
   };

@@ -4,4 +4,5 @@ export interface Item {
   image: String;
   price: Number;
   category: String;
+  count: Number;
 }

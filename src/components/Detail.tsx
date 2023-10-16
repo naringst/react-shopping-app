@@ -12,6 +12,7 @@ interface Item {
   price: Number;
   category: String;
   description: String;
+  count: Number;
 }
 
 export default function Detail({ cartItem, setCartItem }: any) {
@@ -35,7 +36,19 @@ export default function Detail({ cartItem, setCartItem }: any) {
   }, []);
 
   const putItemToCart = () => {
-    setCartItem([item, ...cartItem]);
+    if (cartItem.includes(item) === false) {
+      item!.count = 1;
+      setCartItem([item, ...cartItem]);
+    } else {
+      item!.count = Number(item!.count) + 1;
+      setCartItem(
+        cartItem.map((it: any) =>
+          Number(it.id) === Number(item!.id) ? item : it
+        )
+      );
+    }
+
+    alert(`${item!.title}이 장바구니에 담겼습니다!`);
   };
 
   return (
