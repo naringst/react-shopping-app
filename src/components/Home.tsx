@@ -4,7 +4,7 @@ import { instance } from "../api/instance";
 import { Link } from "react-router-dom";
 import { Item } from "../interface/interface";
 
-export default function Home() {
+export default function Home({ cartItem, setCartItem }: any) {
   const [itemLists, setItemLists] = useState<Item[]>([]);
   const [filteredItems, setFilteredItems] = useState<Item[]>(itemLists);
 
@@ -34,6 +34,18 @@ export default function Home() {
         itemLists.filter((item) => item.category === e.currentTarget.id)
       );
     }
+  };
+
+  const getCart = (e: any) => {
+    //itmellsits에서 해당 아이템을 찾아서 담기
+    e.preventDefault();
+    const result = filteredItems.filter((item) => {
+      return String(item.id) === String(e.target.id);
+    });
+
+    setCartItem([...result, ...cartItem]);
+
+    alert(`${result[0].title}이 장바구니에 담겼습니다!`);
   };
 
   return (
@@ -70,7 +82,10 @@ export default function Home() {
               >
                 <img src={item.image} width="30px" height="50px" />
                 <ItemName>{item.title}</ItemName>
-                <ItemName>{item.price}</ItemName>
+                <ItemName>${item.price}</ItemName>
+                <button id={item.id} onClick={getCart}>
+                  장바구니에 담기
+                </button>
               </ItemDiv>
             </Link>
           );
