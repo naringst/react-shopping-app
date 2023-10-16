@@ -8,8 +8,8 @@ export default function Login() {
     <Container>
       <h1>로그인</h1>
       <ColumnFlexDiv>
-        <Input></Input>
-        <Input></Input>
+        <Input type="email"></Input>
+        <Input type="password"></Input>
       </ColumnFlexDiv>
       <LoginButton>로그인</LoginButton>
       <span>
