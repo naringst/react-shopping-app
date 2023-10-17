@@ -39,34 +39,34 @@ export default function Home({ cartItem, setCartItem }: any) {
   const getCart = (e: any) => {
     //itmellsits에서 해당 아이템을 찾아서 담기
     e.preventDefault();
-    const result = filteredItems.filter((item) => {
+    const thisItem = filteredItems.filter((item) => {
       return String(item.id) === String(e.target.id);
+    })[0];
+
+    //cart에 있는지 확인하는 함수
+    const isInCart = cartItem.some((it: any) => {
+      return it.id === thisItem.id;
     });
-    console.log("result", result);
 
-    const newCart = cartItem.map((it: any) => {
-      it.id == result[0].id ? (it.count += 1) : (it.count = 1);
-      return it;
-    });
+    if (isInCart) {
+      //cart Item에 있다면 -> 카운트 추가
+      const upCountItem = cartItem.filter(
+        (it: any) => it.id === thisItem.id
+      )[0];
+      upCountItem.count += 1;
+      setCartItem(
+        cartItem.map((it: any) => (it.id === upCountItem.id ? upCountItem : it))
+      );
+    } else {
+      //cart에 Item 없다면 -> 담기
+      const addItem = filteredItems.filter(
+        (it: any) => it.id === thisItem.id
+      )[0];
+      addItem.count = 1;
+      setCartItem([addItem, ...cartItem]);
+    }
 
-    console.log("newcart", newCart);
-
-    setCartItem(newCart);
-    // if (cartItem.includes(result[0]["id"]) === false) {
-    //   result[0]["count"] = 1;
-    //   setCartItem([result[0], ...cartItem]);
-    //   console.log(cartItem);
-    // } else {
-    //   result[0]["count"] = Number(result[0]["count"]) + 1;
-    //   console.log("count++");
-    //   const updatedItem = cartItem.map((item: any) =>
-    //     Number(item.id) === Number(result[0].id) ? result[0] : item
-    //   );
-    //   console.log(updatedItem);
-    //   setCartItem(updatedItem);
-    // }
-
-    alert(`${result[0].title}이 장바구니에 담겼습니다!`);
+    alert(`${thisItem.title}이 장바구니에 담겼습니다!`);
   };
 
   return (
