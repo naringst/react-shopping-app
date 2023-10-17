@@ -25,7 +25,6 @@ export default function Detail({ cartItem, setCartItem }: any) {
     try {
       const response = await instance.get(`/products/${itemId}`);
       setItem(response.data);
-      console.log(item);
     } catch (error) {
       console.log(error);
     }
@@ -36,16 +35,34 @@ export default function Detail({ cartItem, setCartItem }: any) {
   }, []);
 
   const putItemToCart = () => {
-    if (cartItem.includes(item) === false) {
-      item!.count = 1;
-      setCartItem([item, ...cartItem]);
-    } else {
-      item!.count = Number(item!.count) + 1;
-      setCartItem(
-        cartItem.map((it: any) =>
-          Number(it.id) === Number(item!.id) ? item : it
-        )
+    //있는지 확인
+    let isInCart = false;
+    console.log(cartItem);
+    if (cartItem) {
+      isInCart = cartItem.some((it: any) => {
+        return it.id === Number(itemId);
+      });
+    }
+
+    if (isInCart) {
+      //있으면 아이템 찾기
+      //원래 카트에 있던 애를 새로 배열로 만들기
+      const newCart = cartItem.filter((it: Item) => it.id == itemId)[0];
+      console.log("newcart", newCart);
+      newCart.count += 1;
+      setItem(newCart);
+
+      const newCartItems = cartItem.map((it: Item) =>
+        it.id == itemId ? newCart : it
       );
+      console.log(newCartItems);
+      setCartItem(newCartItems);
+    } else {
+      item!.count = 1;
+      setItem(item);
+      console.log("itemcount", item!.count);
+
+      setCartItem([item, ...cartItem]);
     }
 
     alert(`${item!.title}이 장바구니에 담겼습니다!`);
