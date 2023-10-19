@@ -4,11 +4,14 @@ import { Container } from "../style";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [pwCheck, setPwCheck] = useState("");
+
+  let navigate = useNavigate();
   // Import the functions you need from the SDKs you need
 
   // TODO: Add SDKs for Firebase products that you want to use
@@ -59,6 +62,7 @@ export default function SignUp() {
           setEmail("");
           setPassword("");
           setPwCheck("");
+          navigate("/");
         })
         .catch((error) => {
           const errorCode = error.code;
