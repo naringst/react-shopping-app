@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function Layout() {
+export default function Layout({ isLoggedIn, setIsLoggedIn }: any) {
   return (
     <div>
       <Header>
@@ -18,7 +18,7 @@ export default function Layout() {
             <Span>마이페이지</Span>
           </StyledLink>
           <StyledLink to="login">
-            <Span>로그인</Span>
+            {isLoggedIn ? <Span>로그아웃</Span> : <Span>로그인</Span>}
           </StyledLink>
         </div>
       </Header>
