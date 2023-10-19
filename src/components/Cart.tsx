@@ -20,7 +20,7 @@ export default function Cart({ cartItem, setCartItem }: any) {
   const countTotal = () => {
     let totalPrice = 0;
     cartItem.forEach((item: any) => {
-      totalPrice += Number(item.price);
+      totalPrice += Number(item.price) * item.count;
       setTotalPrice(totalPrice);
     });
   };
