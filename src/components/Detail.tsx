@@ -48,20 +48,15 @@ export default function Detail({ cartItem, setCartItem }: any) {
       //있으면 아이템 찾기
       //원래 카트에 있던 애를 새로 배열로 만들기
       const newCart = cartItem.filter((it: Item) => it.id == itemId)[0];
-      console.log("newcart", newCart);
       newCart.count += 1;
       setItem(newCart);
-
       const newCartItems = cartItem.map((it: Item) =>
         it.id == itemId ? newCart : it
       );
-      console.log(newCartItems);
       setCartItem(newCartItems);
     } else {
       item!.count = 1;
       setItem(item);
-      console.log("itemcount", item!.count);
-
       setCartItem([item, ...cartItem]);
     }
 
